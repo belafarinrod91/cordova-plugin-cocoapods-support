@@ -40,6 +40,8 @@ module.exports = function (context) {
         pods: {}
     };
 
+    var sourcesUrl = null;
+
     if(oldMinVersion) {
         console.warn('The preference "pods_ios_min_version" has been deprecated. Please use "deployment-target" instead.');
     }
@@ -93,7 +95,7 @@ module.exports = function (context) {
                                     if (podsConfig) {
                                         iosMinVersion = maxVer(iosMinVersion, podsConfig.$['ios-min-version']);
                                         useFrameworks = podsConfig.$['use-frameworks'] === 'true' ? 'true' : useFrameworks;
-                                        console.log("podsConfig ", podsConfig);
+                                        sourcesUrl = podsConfig.$['sources'];
                                     }
                                     (platform.pod || []).forEach(function (pod) {
                                         newPods.pods[pod.$.id] = pod.$;
@@ -119,6 +121,10 @@ module.exports = function (context) {
         newPods.useFrameworks = useFrameworks === 'true';
 
         if (!podified || !_.isEqual(newPods, currentPods)) {
+
+            if(sourcesUrl != null){
+                podfileContents.push("sources '"+sourcesUrl+"'");
+            }
 
             podfileContents.push("platform :ios, '" + iosMinVersion + "'");
             if (useFrameworks === 'true') {
