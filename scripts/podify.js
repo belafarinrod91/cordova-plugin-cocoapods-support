@@ -93,7 +93,7 @@ module.exports = function (context) {
                                     if (podsConfig) {
                                         iosMinVersion = maxVer(iosMinVersion, podsConfig.$['ios-min-version']);
                                         useFrameworks = podsConfig.$['use-frameworks'] === 'true' ? 'true' : useFrameworks;
-                                        console.log("FOOOOOOO");
+                                        console.log("podsConfig ", podsConfig);
                                     }
                                     (platform.pod || []).forEach(function (pod) {
                                         newPods.pods[pod.$.id] = pod.$;
