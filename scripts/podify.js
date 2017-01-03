@@ -123,7 +123,7 @@ module.exports = function (context) {
         if (!podified || !_.isEqual(newPods, currentPods)) {
 
             if(sourcesUrl != null){
-                podfileContents.push("sources '"+sourcesUrl+"'");
+                podfileContents.push("source '"+sourcesUrl+"'");
             }
 
             podfileContents.push("platform :ios, '" + iosMinVersion + "'");
